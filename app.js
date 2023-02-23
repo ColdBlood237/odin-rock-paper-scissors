@@ -20,7 +20,7 @@ function round(playerSelection, computerSelection) {
     // evaluate all the possible outcomes 
     if (playerChoice === "Rock") {
         if (computerChoice === "Rock") {
-            message = "It's a Tie!";
+            message = "Tie!";
         } else if (computerChoice === "Paper") {
             message = "You Lose! Paper beats Rock";
         } else if (computerChoice === "Scissors") {
@@ -31,7 +31,7 @@ function round(playerSelection, computerSelection) {
         if (computerChoice === "Rock") {
             message = "You Win! Paper beats Rock";
         } else if (computerChoice === "Paper") {
-            message = "It's a Tie!";
+            message = "Tie!";
         } else if (computerChoice === "Scissors") {
             message = "You Lose! Scissors beat Paper";
         }
@@ -42,14 +42,40 @@ function round(playerSelection, computerSelection) {
         } else if (computerChoice === "Paper") {
             message = "You Win! Scissors beat Paper";
         } else if (computerChoice === "Scissors") {
-            message = "It's a Tie!";
+            message = "Tie!";
         }
     }
 
     return message;
 }
 
-const playerSelection = getPlayerChoice();
-const computerSelection = getComputerChoice();
+function game() {
+    let playerPoints = 0;
+    let computerPoints = 0;
+    let gameover = false;
 
-console.log(round(playerSelection, computerSelection));
+    while (!gameover) {
+        const playerSelection = getPlayerChoice();
+        const computerSelection = getComputerChoice();
+        let roundResult = round(playerSelection, computerSelection);
+
+        // add points in function of the winner of the round
+        // don't do anything in case of tie
+        if (roundResult.slice(0, 7) === "You Win") {
+            playerPoints++;
+        } else if (roundResult.slice(0, 8) === "You Lose") {
+            computerPoints++;
+        }
+
+        console.log(roundResult + `\n Score: ${playerPoints}:${computerPoints}`);
+
+        if (playerPoints === 5 || computerPoints === 5) {
+            gameover = true;
+        }
+    }
+
+    let result = (playerPoints === 5) ? "Game Over You Win!" : " Game Over Computer Wins!";
+    return result;
+}
+
+console.log(game());
