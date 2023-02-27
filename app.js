@@ -5,16 +5,20 @@ function getComputerChoice() {
     return options[choice];
 }
 
-// function that ask the user to play
-function getPlayerChoice() {
-    let choice = prompt("Rock, Paper or Scissors");
-    return choice;
-}
+const buttons = document.querySelectorAll("button");
+const div = document.querySelector("div");
+
+buttons.forEach(button => {
+    button.addEventListener("click", (button) => {
+        div.textContent = playRound(button.target.id);
+    });
+});
+
 
 // plays a single round and determine the winner
-function round(playerSelection, computerSelection) {
-    let playerChoice = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1).toLowerCase();
-    let computerChoice = computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1).toLowerCase();
+function playRound(playerSelection) {
+    let playerChoice = playerSelection;
+    let computerChoice = getComputerChoice();
     let message = "";
 
     // evaluate all the possible outcomes 
@@ -49,33 +53,34 @@ function round(playerSelection, computerSelection) {
     return message;
 }
 
-function game() {
-    let playerPoints = 0;
-    let computerPoints = 0;
-    let gameover = false;
 
-    while (!gameover) {
-        const playerSelection = getPlayerChoice();
-        const computerSelection = getComputerChoice();
-        let roundResult = round(playerSelection, computerSelection);
+// function game() {
+//     let playerPoints = 0;
+//     let computerPoints = 0;
+//     let gameover = false;
 
-        // add points in function of the winner of the round
-        // don't do anything in case of tie
-        if (roundResult.slice(0, 7) === "You Win") {
-            playerPoints++;
-        } else if (roundResult.slice(0, 8) === "You Lose") {
-            computerPoints++;
-        }
+//     while (!gameover) {
+//         const playerSelection = getPlayerChoice();
+//         const computerSelection = getComputerChoice();
+//         let roundResult = round(playerSelection, computerSelection);
 
-        console.log(roundResult + `\n Score: ${playerPoints}:${computerPoints}`);
+//         // add points in function of the winner of the round
+//         // don't do anything in case of tie
+//         if (roundResult.slice(0, 7) === "You Win") {
+//             playerPoints++;
+//         } else if (roundResult.slice(0, 8) === "You Lose") {
+//             computerPoints++;
+//         }
 
-        if (playerPoints === 5 || computerPoints === 5) {
-            gameover = true;
-        }
-    }
+//         console.log(roundResult + `\n Score: ${playerPoints}:${computerPoints}`);
 
-    let result = (playerPoints === 5) ? "Game Over You Win!" : " Game Over Computer Wins!";
-    return result;
-}
+//         if (playerPoints === 5 || computerPoints === 5) {
+//             gameover = true;
+//         }
+//     }
 
-console.log(game());
+//     let result = (playerPoints === 5) ? "Game Over You Win!" : " Game Over Computer Wins!";
+//     return result;
+// }
+
+//console.log(game());
