@@ -8,9 +8,33 @@ function getComputerChoice() {
 const buttons = document.querySelectorAll("button");
 const div = document.querySelector("div");
 
+let playerPoints = 0;
+let computerPoints = 0;
+
+
 buttons.forEach(button => {
     button.addEventListener("click", (button) => {
-        div.textContent = playRound(button.target.id);
+
+        let roundResult = playRound(button.target.id);
+
+        if (roundResult.slice(0, 7) === "You Win") {
+            playerPoints++;
+            console.log(playerPoints);
+        }
+        else if (roundResult.slice(0, 8) === "You Lose") {
+            computerPoints++;
+
+        }
+
+        div.textContent = roundResult + " " + playerPoints + ":" + computerPoints;
+
+        if (playerPoints === 5 || computerPoints === 5) {
+            let result = (playerPoints === 5) ? "Game Over You Win!" : " Game Over Computer Wins!";
+            div.textContent = result;
+            buttons.forEach(button => {  // hide the buttons when the game is over
+                button.hidden = true;
+            })
+        }
     });
 });
 
@@ -53,34 +77,3 @@ function playRound(playerSelection) {
     return message;
 }
 
-
-// function game() {
-//     let playerPoints = 0;
-//     let computerPoints = 0;
-//     let gameover = false;
-
-//     while (!gameover) {
-//         const playerSelection = getPlayerChoice();
-//         const computerSelection = getComputerChoice();
-//         let roundResult = round(playerSelection, computerSelection);
-
-//         // add points in function of the winner of the round
-//         // don't do anything in case of tie
-//         if (roundResult.slice(0, 7) === "You Win") {
-//             playerPoints++;
-//         } else if (roundResult.slice(0, 8) === "You Lose") {
-//             computerPoints++;
-//         }
-
-//         console.log(roundResult + `\n Score: ${playerPoints}:${computerPoints}`);
-
-//         if (playerPoints === 5 || computerPoints === 5) {
-//             gameover = true;
-//         }
-//     }
-
-//     let result = (playerPoints === 5) ? "Game Over You Win!" : " Game Over Computer Wins!";
-//     return result;
-// }
-
-//console.log(game());
